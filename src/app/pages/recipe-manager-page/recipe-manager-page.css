@@ -1,0 +1,11 @@
+/* src/app/pages/recipe-manager-page/recipe-manager-page.css */
+.chart-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+canvas {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+}
