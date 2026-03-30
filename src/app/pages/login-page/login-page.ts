@@ -1,34 +1,35 @@
-// src/app/pages/login-page/login-page.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
 @Component({
-  selector: 'app-login-page',
-  imports: [CommonModule, FormsModule],
-  templateUrl: './login-page.html',
-  styleUrl: './login-page.css',
+selector: 'app-login-page',
+imports: [CommonModule, FormsModule],
+templateUrl: './login-page.html',
+styleUrl: './login-page.css',
 })
 export class LoginPage {
-  public credentials = { identifier: '', password: '' };
-  public errorMessage: string | null = null;
-
-  constructor(private http: HttpClient, private router: Router) {}
-
-  onSubmit(): void {
-    this.errorMessage = null;
-    this.http.post<any>('http://localhost:8080/auth/login', this.credentials).subscribe({
-      next: (response) => {
-        if (response.token) {
-          localStorage.setItem('savapp_jwt_token', response.token);
-        }
-        this.router.navigate(['/recipe-manager']);
-      },
-      error: () => {
-        this.errorMessage = 'Identifiants invalides ou serveur indisponible.';
-      }
-    });
-  }
+// Modèle pour le formulaire :
+public credentials = { identifier: '', password: ''};
+// Gestion de l'affichage de l'erreur :
+public errorMessage: string | null = null;
+constructor(
+private authService: AuthService,
+private router: Router
+) {}
+onSubmit(): void {
+this.errorMessage = null; // Réinitialisation du message
+this.authService.login(this.credentials).subscribe({
+next: () => {
+// Redirection vers la page de gestion ou le calculateur :
+this.router.navigate(['/recipe-manager']);
+},
+error: (err) => {
+this.errorMessage ="Identifiants invalides ou serveur indisponible.";
+//console.log('Indentifiants envoyés :', this.credentials)
+console.error('Erreur de connexion', err);
+}
+});
+}
 }

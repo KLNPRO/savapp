@@ -24,14 +24,7 @@ return this.http.get<Ingredient[]>(this.API_URL_INGREDIENT);
 getIngredientById(id: number): Observable<Ingredient> {
 return this.http.get<Ingredient>(`${this.API_URL_INGREDIENT}/${id}`);
 }
-// TODO : Créer plus tard les méthodes manquantes :
-// - deleteIngredients(id: number)
-// - deleteAllIngredients()
-// - addIngredient(ingredient: Ingredient)
-// - updateIngredient(id: number, ingredient: Ingredient)
-// ... (code précédent)
-/** * Ajoute un nouvel ingrédient.
-*/
+
 addIngredient(ingredient: Ingredient): Observable<Ingredient> {
 return this.http.post<Ingredient>(this.API_URL_INGREDIENT, ingredient);
 }
