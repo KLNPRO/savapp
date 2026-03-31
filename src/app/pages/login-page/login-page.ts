@@ -28,6 +28,7 @@ this.router.navigate(['/recipe-manager']);
 error: (err) => {
 this.errorMessage ="Identifiants invalides ou serveur indisponible.";
 //console.log('Indentifiants envoyés :', this.credentials)
+//TEST
 console.error('Erreur de connexion', err);
 }
 });
