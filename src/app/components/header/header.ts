@@ -11,4 +11,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class Header {
 public authService = inject(AuthService);
+logout(event: Event): void {
+    event.preventDefault();
+    this.authService.logout();
+  }
 }

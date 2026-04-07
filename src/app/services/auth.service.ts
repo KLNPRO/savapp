@@ -9,7 +9,9 @@ export class AuthService {
     private router = inject(Router); // AJOUTER LE ROUTER
     // Signal pour suivre l'état de la connexion :
     //public isAuthenticated = signal<boolean>(this.hasToken());
+
     constructor(private http: HttpClient) { }
+
     login(credential: any): Observable<any> {
         return this.http.post(`${this.API_URL}/login`, credential).pipe(
             tap((response: any) => {
@@ -24,6 +26,12 @@ export class AuthService {
         localStorage.removeItem(this.TOKEN_KEY);
         //this.isAuthenticated.set(false);
         this.router.navigate(['/login']);  
+    }
+     getToken(): string | null {
+        return localStorage.getItem(this.TOKEN_KEY);
+    }
+    private hasToken(): boolean {
+        return !!localStorage.getItem(this.TOKEN_KEY);
     }
     // Méthode à rajouter :
 isAuthenticated(): boolean {
@@ -61,11 +69,6 @@ roles: decoded.role || [],
 expiration: new Date(decoded.exp * 1000)
 };
 }
-    getToken(): string | null {
-        return localStorage.getItem(this.TOKEN_KEY);
-    }
-    private hasToken(): boolean {
-        return !!localStorage.getItem(this.TOKEN_KEY);
-    }
+   
 }
 
